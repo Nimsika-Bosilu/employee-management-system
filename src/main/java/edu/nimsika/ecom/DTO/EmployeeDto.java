@@ -1,4 +1,4 @@
-package edu.nimsika.ecom.model;
+package edu.nimsika.ecom.DTO;
 
 import lombok.Data;
 
