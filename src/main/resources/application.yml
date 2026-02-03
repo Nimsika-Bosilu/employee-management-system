@@ -18,7 +18,7 @@ spring:
 
 jwt:
   secret: "5367566B59703373367639792F423F4528482B4D6251655468576D5A71347437"
-  expiration: 300
+  expiration: 300000
   issuer: "employee-management-system"
   audience: "employee-client"
   secret-base64: "c2VjcmV0LWtleS1mb3Itand0LWF1dGhlbnRpY2F0aW9uLXdpdGgtMzItYnl0ZXM="

@@ -15,7 +15,7 @@ import java.util.Collections;
 
         @Override
         public Collection<? extends GrantedAuthority> getAuthorities() {
-            return Collections.singleton(new SimpleGrantedAuthority("hr_manager"));
+            return Collections.singleton(new SimpleGrantedAuthority(userRegisterEntity.getUser_role()));
         }
 
         @Override

@@ -37,7 +37,7 @@ public class SecurityConfig {
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        // Login සහ Register වලට ඕනෑම කෙනෙක්ට එන්න දෙනවා
+                        .requestMatchers("/api/v1/auth/user-profile").authenticated()
                         .requestMatchers("/api/v1/auth/**").permitAll()
                         .anyRequest().authenticated()
                 ).sessionManagement(session -> session

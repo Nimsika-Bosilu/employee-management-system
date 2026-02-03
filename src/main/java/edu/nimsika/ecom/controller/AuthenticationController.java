@@ -8,6 +8,8 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
@@ -46,17 +48,43 @@ public class AuthenticationController {
       cookie.setHttpOnly(true);
       cookie.setSecure(false);
       cookie.setPath("/");
-      cookie.setMaxAge(60*2);
+      cookie.setMaxAge(60*10);
 
       httpServletResponse.addCookie(cookie);
 
       return ResponseEntity.ok("Login ok");
   }
+    @PostMapping("/logout")
+    public ResponseEntity<Map<String, String>> logout(HttpServletResponse response) {
+        Cookie cookie = new Cookie("accessToken", null);
+
+        cookie.setHttpOnly(true);
+        cookie.setSecure(false);
+        cookie.setPath("/");
+        cookie.setMaxAge(0);
+
+        response.addCookie(cookie);
+        Map<String, String>  responseBody= new HashMap<>();
+        responseBody.put("message", "Logout Successful");
+        responseBody.put("status", "success");
+        return ResponseEntity.ok(responseBody);
+    }
+
 
   @GetMapping("/user-profile")
-    public ResponseEntity<String> getUserProfile(){
-      String username = SecurityContextHolder.getContext().getAuthentication().getName();
-      return ResponseEntity.ok("User is logged in as: " + username );
+    public ResponseEntity<Map<String, String>> getUserProfile(){
+      Authentication authentication=SecurityContextHolder.getContext().getAuthentication();
+      String username = authentication.getName();
+      String role = authentication.getAuthorities().stream()
+              .findFirst()
+              .map(GrantedAuthority::getAuthority)
+              .orElse("USER");
+
+      Map<String, String> response = new HashMap<>();
+      response.put("username", username);
+      response.put("role", role);
+      response.put("status", "active");
+      return ResponseEntity.ok(response);
   }
 
 }

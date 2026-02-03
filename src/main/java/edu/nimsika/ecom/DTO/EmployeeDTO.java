@@ -3,7 +3,7 @@ package edu.nimsika.ecom.DTO;
 import lombok.Data;
 
 @Data
-public class EmployeeDto {
+public class EmployeeDTO {
     private Long id;
     private String firstName;
     private String lastName;
